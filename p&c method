@@ -1,0 +1,39 @@
+int T;
+   cin>>T;
+   while(T--)
+   {
+    //(sum+2i+6j)%9==0 then it is divisible
+    int sum=0,count2=0,count3=0;
+    string s;
+    cin>>s;
+    for(char c:s){
+        int val=c-'0';
+        sum+=val;
+        if(val==2) count2++;
+        if(val==3) count3++;
+    }
+    int mod=sum%9;
+    if(mod==0){
+        cout<<"YES"<<endl;
+        continue;
+    }
+    int found=0;
+    for(int i=0;i<=count2;i++){
+        for(int j=0;j<=count3;j++){
+            int temp=(sum+i*2+j*6)%9;
+            if(temp==0){
+                found=1;
+                break;
+            }
+        }
+        if(found)break;
+    }
+    if(found){
+        cout<<"YES"<<endl;
+    }
+    else{
+        cout<<"NO"<<endl;
+    }
+   }
+   return 0;
+}
