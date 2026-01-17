@@ -66,5 +66,10 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
+    DisjointSet ds(number of nodes);
+    ds.usize(node 1,node 2);
+    if(ds.finduparent(node1)==ds.finduparent(node2){
+       cout<<"Same parent"<<endl;
+   }
     return 0;
 }
