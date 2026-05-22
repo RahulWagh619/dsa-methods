@@ -53,3 +53,11 @@ public:
         return node->isEnd;
     }
 };
+int main() {
+
+    Trie trie;
+
+    trie.insert("car");
+    trie.insert("care");
+
+}
