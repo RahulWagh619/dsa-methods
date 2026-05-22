@@ -55,9 +55,8 @@ public:
 };
 int main() {
 
-    Trie trie;
-
-    trie.insert("car");
-    trie.insert("care");
+  Trie* trie = new Trie();
+  trie->insert("car");
+  TrieNode* node = trie->root;
 
 }
