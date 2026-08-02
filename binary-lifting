@@ -73,6 +73,11 @@ int kthAncestor(int node, int k)
 
         return up[u][0];
     }
+int distance(int u, int v)
+    {
+        int L = lca(u, v);
+        return depth[u] + depth[v] - 2 * depth[L];
+    }
 
 adj.resize(n + 1);
 
