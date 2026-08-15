@@ -1,0 +1,114 @@
+# Bridges
+
+class Solution {
+public:
+int t=1;
+void dfs(int node,int parent,vector<vector<int>>&adj,vector<int>&vis,vector<int>&tim,vector<int>&low,vector<vector<int>>&ans){
+    vis[node]=1;
+    tim[node]=low[node]=t;
+    t++;
+    for(int i=0;i<adj[node].size();i++){
+        int val=adj[node][i];
+        if(val==parent)continue;
+        if(vis[val]==0){
+            dfs(val,node,adj,vis,tim,low,ans);
+            low[node]=min(low[node],low[val]);
+            if(tim[node]<low[val]){
+                vector<int>k;
+                k.push_back(node);
+                k.push_back(val);
+                ans.push_back(k);
+            }
+            
+        }
+        else{
+            low[node]=min(low[node],low[val]);
+        }
+    }
+
+
+}
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<vector<int>>adj(n);
+        for(int i=0;i<connections.size();i++){
+            int u=connections[i][0];
+            int v=connections[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        vector<int>vis(n,0);
+        vector<int>tim(n);
+        vector<int>low(n);
+        vector<vector<int>>ans;
+        dfs(0,-1,adj,vis,tim,low,ans);
+        return ans;
+    }
+};
+
+
+
+#Articulation points
+only change here is in case of low we remove parent and visited nodes while in that of bridges was just apart from parent
+
+class Solution {
+  public:
+  int t=1;
+  void dfs(int node,int parent,vector<vector<int>>&adj,vector<int>&vis,vector<int>&tim,vector<int>&low,set<int>&st){
+      vis[node]=1;
+      tim[node]=low[node]=t;
+      t++;
+      int c=0;
+      for(int i=0;i<adj[node].size();i++){
+          int val=adj[node][i];
+          if(val==parent)continue;
+          if(vis[val]==0){
+              c++;
+              dfs(val,node,adj,vis,tim,low,st);
+              low[node]=min(low[node],low[val]);
+              if(tim[node]<=low[val] && parent!=-1){
+                 st.insert(node);
+              }
+
+          }
+          else{
+              low[node]=min(low[node],tim[val]);
+          }
+      }
+              if(parent==-1 && c>1){
+                  st.insert(node);
+              }
+
+
+  }
+    vector<int> articulationPoints(int V, vector<vector<int>>& edges) {
+        // code here
+        int n=V;
+        vector<vector<int>>adj(n);
+        for(int i=0;i<edges.size();i++){
+            int u=edges[i][0];
+            int v=edges[i][1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        vector<int>vis(n,0);
+        vector<int>tim(n);
+        vector<int>low(n);
+        set<int>st;
+        
+        for(int i=0;i<n;i++){
+            if(vis[i]==0){
+                dfs(i,-1,adj,vis,tim,low,st);
+            }
+        }
+        vector<int>ans;
+        for(auto &i:st){
+            ans.push_back(i);
+        }
+        if(ans.size()==0){
+            ans.push_back(-1);
+        }
+        return ans;
+
+    }
+};
+
